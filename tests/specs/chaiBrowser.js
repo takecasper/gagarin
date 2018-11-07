@@ -37,6 +37,13 @@ describe('Using chai in the browser', function () {
          expect(4).to.eql(4);
       });
     });
+    xit('should support coverage after change urls?', function () {
+      return client
+      .get('http://www.google.com')
+      .execute(function(){
+         expect(4).to.eql(4);
+      });
+    });
 
     it('should work given parameters', function () {
       return client
@@ -107,7 +114,7 @@ describe('Using chai in the browser', function () {
       });
     });
 
-    it('should throw a descriptive error if the assertion fails', function () {
+    it('should throw a descriptive error if the assertion fails derp', function () {
       return client.promise(function () {
         expect(true).to.be.false;
       })
@@ -134,7 +141,7 @@ describe('Using chai in the browser', function () {
       });
     });
 
-    it('should throw a descriptive error if the assertion fails', function () {
+    it('should throw a descriptive error if the assertion fails herp', function () {
       return client.wait(1000, 'until something happens', function () {
         expect(true).to.be.false;
       })

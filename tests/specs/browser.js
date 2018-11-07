@@ -8,6 +8,7 @@ describe('Tests with browser', function () {
   var server = meteor({});
 
   var browser1 = browser(server);
+  var browser2 = browser(server);
   
   it('should be ok', function () {
     return Promise.resolve('should be ok');
@@ -60,7 +61,7 @@ describe('Tests with browser', function () {
         5000,
         'for find to resolve',
         function(id){
-          return Items.findOne({_id: id});; //window.herp;//Items.find({}).fetch();
+          return Items.findOne({_id: id});
         }, [id]).then(function (value) {
           expect(value).not.to.be.empty;
           expect(value._id).to.equal(id);
@@ -71,18 +72,19 @@ describe('Tests with browser', function () {
 
   describe('Restarting server', function () {
 
-    var browser2 = browser(server);
     var value    = 0;
 
-    this.timeout(10000);
+    this.timeout(20000);
 
     before(function () {
-      return server.restart(2000);
+      return server.restart(100);
     });
 
     before(function () {
       return browser2
-        .execute("return reset;")
+        .execute(function(){
+          return reset;
+        })
         .then(function (numberOfResets) {
           value = numberOfResets;
         });
@@ -102,7 +104,9 @@ describe('Tests with browser', function () {
         .wait(7000, 'until status.connected === true', function () {
           return Meteor.connection.status().connected;
         })
-        .execute("return reset;")
+        .execute(function(){
+          return reset;
+        })
         .then(function (numberOfResets) {
           // XXX the first "reset" occurs on startup, so we have two resets up to this point
           expect(numberOfResets).to.equal(value + 1);
@@ -115,7 +119,9 @@ describe('Tests with browser', function () {
           .wait(7000, 'until status.connected === true', function () {
             return Meteor.connection.status().connected;
           })
-          .execute("return reset;")
+          .execute(function(){
+            return reset;
+          })
           .then(function (numberOfResets) {
             expect(numberOfResets).to.equal(value + 2);
           });
