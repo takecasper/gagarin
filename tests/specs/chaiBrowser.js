@@ -37,6 +37,13 @@ describe('Using chai in the browser', function () {
          expect(4).to.eql(4);
       });
     });
+    xit('should support coverage after change urls?', function () {
+      return client
+      .get('http://www.google.com')
+      .execute(function(){
+         expect(4).to.eql(4);
+      });
+    });
 
     it('should work given parameters', function () {
       return client
@@ -64,14 +71,16 @@ describe('Using chai in the browser', function () {
     it('should work', function () {
       return client  
       .execute(function(){
-        [4, 11, 15].should.include.one.below(10);
-        [4, 11, 15].should.contain.some.above(10);
-        [4, 11, 15].should.not.contain.any.above(20);
+        [4, 11, 16].should.include.one.below(10);
+        [4, 11, 17].should.contain.some.above(10);
+        // WARN: chai-things `any` has issue w/ 5.x + 4.x mocha/chai, interestingly enough, changing 
+        // the name of `any`->`foobar` in chai-things, resolved the issue, some works without issue.
+        [4, 11, 18].should.not.contain.some.above(20);
         [{ a: 'cat' }, { a: 'dog' }].should.contain.a.thing.with.property('a', 'cat');
         [{ a: 'cat' }, { a: 'dog' }].should.contain.an.item.with.property('a', 'dog');
-        [4, 11, 15].should.all.be.below(20);
+        [4, 11, 19].should.all.be.below(20);
         [{ a: 'cat' }, { a: 'dog' }].should.all.have.property('a');
-        [4, 11, 15].should.all.be.above(2);
+        [4, 11, 20].should.all.be.above(2);
         [{ a: 'cat' }, { a: 'cat' }].should.all.have.property('a', 'cat');
       })
     });
@@ -105,7 +114,7 @@ describe('Using chai in the browser', function () {
       });
     });
 
-    it('should throw a descriptive error if the assertion fails', function () {
+    it('should throw a descriptive error if the assertion fails derp', function () {
       return client.promise(function () {
         expect(true).to.be.false;
       })
@@ -132,7 +141,7 @@ describe('Using chai in the browser', function () {
       });
     });
 
-    it('should throw a descriptive error if the assertion fails', function () {
+    it('should throw a descriptive error if the assertion fails herp', function () {
       return client.wait(1000, 'until something happens', function () {
         expect(true).to.be.false;
       })

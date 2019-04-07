@@ -14,7 +14,7 @@ Npm.depends({
 
 Package.registerBuildPlugin({
   name: 'gagarin-artifacts',
-  sources: ['meteor/plugin.js']
+  sources: ['plugin.js']
 })
 
 Package.onUse(function (api) {
@@ -29,8 +29,8 @@ Package.onUse(function (api) {
 
   api.add_files([
 
-    'meteor/settings.js',
-    'meteor/backdoor.js',
+    'settings.js',
+    'backdoor.js',
 
   ], 'server');
 
